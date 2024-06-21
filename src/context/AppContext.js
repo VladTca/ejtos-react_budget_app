@@ -1,25 +1,16 @@
 import React, { createContext, useReducer } from 'react';
 
-const AppReducer = (state, action) => {
+export const AppReducer = (state, action) => {
     switch (action.type) {
-        case 'CHANGE_CURRENCY':
+        case 'SET_BUDGET':
+            return {
+                ...state,
+                budget: action.payload,
+            };
+        case 'CHG_CURRENCY':
             return {
                 ...state,
                 currency: action.payload,
-            };
-        case 'ADD_EXPENSE':
-            return {
-                ...state,
-                expenses: [...state.expenses, action.payload],
-            };
-        case 'RED_EXPENSE':
-            return {
-                ...state,
-                expenses: state.expenses.map(expense =>
-                    expense.name === action.payload.name
-                        ? { ...expense, cost: expense.cost - action.payload.cost }
-                        : expense
-                ),
             };
         default:
             return state;
@@ -27,19 +18,25 @@ const AppReducer = (state, action) => {
 };
 
 const initialState = {
-    budget: 1000,
-    expenses: [],
-    currency: '£', // Начальное значение валюты
+    budget: 2000,
+    expenses: [
+        { id: "Marketing", name: 'Marketing', cost: 50 },
+        { id: "Finance", name: 'Finance', cost: 300 },
+        { id: "Sales", name: 'Sales', cost: 70 },
+        { id: "Human Resource", name: 'Human Resource', cost: 40 },
+        { id: "IT", name: 'IT', cost: 500 },
+    ],
+    currency: '£',
 };
 
 export const AppContext = createContext(initialState);
 
-export const AppProvider = ({ children }) => {
+export const AppProvider = (props) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
     return (
         <AppContext.Provider value={{ ...state, dispatch }}>
-            {children}
+            {props.children}
         </AppContext.Provider>
     );
 };

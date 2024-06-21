@@ -7,7 +7,7 @@ const CurrencySelector = () => {
     const handleCurrencyChange = (event) => {
         const selectedCurrency = event.target.value;
         dispatch({
-            type: 'CHANGE_CURRENCY',
+            type: 'CHG_CURRENCY',
             payload: selectedCurrency,
         });
     };
@@ -19,7 +19,7 @@ const CurrencySelector = () => {
                 <option value='£'>£ (UK)</option>
                 <option value='₹'>₹ (India)</option>
                 <option value='€'>€ (Europe)</option>
-                <option value='CAD'>CAD (Canada)</option>
+                <option value='$'>$ (US)</option>
             </select>
         </div>
     );
