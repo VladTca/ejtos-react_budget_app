@@ -1,0 +1,7 @@
+.currency-symbol {
+    margin-left: 20px;
+    font-size: 1.25em;
+    line-height: 1.25em;
+    display: flex;
+    align-items: center;
+}
