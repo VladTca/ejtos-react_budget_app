@@ -7,7 +7,7 @@ const CurrencySelector = () => {
     const handleCurrencyChange = (event) => {
         const selectedCurrency = event.target.value;
         dispatch({
-            type: 'CHANGE_CURRENCY',
+            type: 'CHG_CURRENCY',
             payload: selectedCurrency,
         });
     };

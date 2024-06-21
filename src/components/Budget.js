@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const Budget = () => {
-    const { budget, expenses, dispatch } = useContext(AppContext);
+    const { budget, dispatch, currency } = useContext(AppContext);
     const [newBudget, setNewBudget] = useState(budget);
 
     const handleBudgetChange = (event) => {
@@ -12,14 +12,6 @@ const Budget = () => {
     const handleSubmit = () => {
         if (newBudget < 0) {
             alert("You cannot reduce the budget value below zero");
-            setNewBudget(budget); // Reset to current budget
-            return;
-        }
-
-        const totalExpenses = expenses.reduce((total, item) => total + item.cost, 0);
-
-        if (newBudget < totalExpenses) {
-            alert("You cannot reduce the budget value lower than the total expenses");
             setNewBudget(budget); // Reset to current budget
             return;
         }
@@ -37,9 +29,13 @@ const Budget = () => {
         });
     }
 
+    useEffect(() => {
+        setNewBudget(budget); // Update newBudget when budget changes
+    }, [budget]);
+
     return (
         <div className='alert alert-secondary'>
-            <span>Budget: £</span>
+            <span>Budget: {currency} </span>
             <input
                 type="number"
                 step="10"
@@ -47,7 +43,7 @@ const Budget = () => {
                 max="20000"
                 value={newBudget}
                 onChange={handleBudgetChange}
-                onBlur={handleSubmit} // Handle submit on blur or add a submit button
+                onBlur={handleSubmit}
             ></input>
         </div>
     );
