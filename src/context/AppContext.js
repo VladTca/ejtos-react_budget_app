@@ -12,6 +12,33 @@ export const AppReducer = (state, action) => {
                 ...state,
                 currency: action.payload,
             };
+        case 'ADD_EXPENSE':
+            const updatedExpensesAdd = state.expenses.map(expense => {
+                if (expense.name === action.payload.name) {
+                    return { ...expense, cost: expense.cost + action.payload.cost };
+                }
+                return expense;
+            });
+            return {
+                ...state,
+                expenses: updatedExpensesAdd,
+            };
+        case 'RED_EXPENSE':
+            const updatedExpensesRed = state.expenses.map(expense => {
+                if (expense.name === action.payload.name) {
+                    return { ...expense, cost: expense.cost - action.payload.cost };
+                }
+                return expense;
+            });
+            return {
+                ...state,
+                expenses: updatedExpensesRed,
+            };
+        case 'DELETE_EXPENSE':
+            return {
+                ...state,
+                expenses: state.expenses.filter(expense => expense.id !== action.payload),
+            };
         default:
             return state;
     }

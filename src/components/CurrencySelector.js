@@ -16,10 +16,10 @@ const CurrencySelector = () => {
         <div className='alert alert-secondary'>
             <span>Select Currency: </span>
             <select defaultValue='£' onChange={handleCurrencyChange}>
-                <option value='£'>£ (UK)</option>
-                <option value='₹'>₹ (India)</option>
-                <option value='€'>€ (Europe)</option>
-                <option value='$'>$ (US)</option>
+                <option value='£'>£ (Pound)</option>
+                <option value='₹'>₹ (Rupee)</option>
+                <option value='€'>€ (Euro)</option>
+                <option value='$'>$ (Dollar)</option>
             </select>
         </div>
     );

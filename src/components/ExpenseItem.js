@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import { TiDelete } from 'react-icons/ti';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'; // Импорт иконок для плюса и минуса
 import { AppContext } from '../context/AppContext';
-import styles from './ExpenseItem.module.css'; // Предположим, что у вас есть файл стилей для ExpenseItem
+import styles from './ExpenseItem.module.css';
+
 
 const ExpenseItem = (props) => {
-    const { dispatch, currency } = useContext(AppContext);
+    const { dispatch, expenses } = useContext(AppContext);
 
     const handleDeleteExpense = () => {
         dispatch({
@@ -27,21 +28,27 @@ const ExpenseItem = (props) => {
     };
 
     const decreaseAllocation = (name) => {
-        const expense = {
+        const expense = expenses.find(exp => exp.name === name);
+        if (expense.cost - 10 < 0) {
+            alert("Expense cannot be negative");
+            return;
+        }
+
+        const newExpense = {
             name: name,
             cost: 10,
         };
 
         dispatch({
             type: 'RED_EXPENSE',
-            payload: expense
+            payload: newExpense
         });
     };
 
     return (
         <tr>
             <td>{props.name}</td>
-            <td>{currency}{props.cost}</td>
+            <td>{props.currency}{props.cost}</td>
             <td>
                 <button className={styles.increaseButton} onClick={() => increaseAllocation(props.name)}>
                     <AiOutlinePlus size='1.5em' color='white' />
